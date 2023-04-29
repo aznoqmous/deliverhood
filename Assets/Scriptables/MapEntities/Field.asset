@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3266fcb902a3140b744a97bfd9b488, type: 3}
+  m_Name: Field
+  m_EditorClassIdentifier: 
+  Sprite: {fileID: -1270774502702017109, guid: 863717833986e0a4f9aa63eb7b06d3c1, type: 3}
+  Type: 1
+  ConsumedResources: []
+  GainedResources:
+  - {fileID: 11400000, guid: 6771ae7aaabb1834a8498d746c7f34c8, type: 2}
+  Cooldown: 2

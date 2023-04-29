@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Tilemap
+    uniqueID: 1351223115
+    locked: 0
+  - name: Grid
+    uniqueID: 3031389603
+    locked: 0
+  - name: Paths
+    uniqueID: 556998275
+    locked: 0
+  - name: MapEntities
+    uniqueID: 2858681175
+    locked: 0
+  - name: Player
+    uniqueID: 2194661963
+    locked: 0
+  - name: UI
+    uniqueID: 3418856671
+    locked: 0
