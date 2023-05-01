@@ -8,6 +8,14 @@ public class ScriptableResource : ScriptableObject
 {
     public Sprite Sprite;
     public float Cost;
+
+    public bool IsCoin
+    {
+        get
+        {
+            return this == Player.Instance.CoinResource;
+        }
+    }
 }
 
 [Serializable]

@@ -17,4 +17,4 @@ MonoBehaviour:
   ConsumedResources: []
   GainedResources:
   - {fileID: 11400000, guid: 1fb17af28ba50ea4987ed2b049473463, type: 2}
-  Cooldown: 2
+  Cooldown: 0.6

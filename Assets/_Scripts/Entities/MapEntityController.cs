@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86;
 
 public class MapEntityController : MonoBehaviour
 {
@@ -14,7 +14,8 @@ public class MapEntityController : MonoBehaviour
     [SerializeField] Image _consumedSprite;
     [SerializeField] Image _gainedSprite;
     [SerializeField] Image _transactionArrow;
-    [SerializeField] TextMeshProUGUI _actionTmp;
+    [SerializeField] Image _countDownImage;
+    [SerializeField] GameObject _countDownContainer;
 
     private List<ScriptableResource> _availableConsumedResources;
     private List<ScriptableResource> _availableGainedResources;
@@ -23,7 +24,8 @@ public class MapEntityController : MonoBehaviour
     private ScriptableResource _gainedResource;
     [SerializeField] private float _cooldown;
     [SerializeField] private float _lastTime;
-    [SerializeField] private int _deliveryMaxTime;
+    [SerializeField] private float _deliveryMaxTime;
+    [SerializeField] private float _deliveryTotalTime;
     private MapEntityType _type;
 
     public void Load(ScriptableMapEntity sme)
@@ -34,17 +36,42 @@ public class MapEntityController : MonoBehaviour
         _type = sme.Type;
         _availableConsumedResources = sme.ConsumedResources;
         _availableGainedResources = sme.GainedResources;
-
-        _lastTime = -_cooldown;
         Refresh();
+    }
+
+    private void Update()
+    {
+        if(GameState.Playing == GameManager.Instance.State)
+        {
+            _actionCanvas.SetActive(IsAvailable());
+            _countDownContainer.SetActive(_deliveryMaxTime > 0||IsInCooldown());
+            UpdateDeliveryTimeLeft();
+            UpdateCooldown();
+            if (HasToRefresh()) Refresh();
+            switch (_type)
+            {
+                case MapEntityType.City:
+                    if (IsAvailable()) Player.Instance.RemoveSatisfaction(Time.deltaTime/50f);
+                    break;
+                case MapEntityType.Resource:
+                    break;
+                case MapEntityType.Trade:
+                    break;
+                case MapEntityType.Consumer:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     public void Refresh()
     {
-        _actionTmp.text = "";
+        _lastTime = -_cooldown;
         switch (_type)
         {
             case MapEntityType.City:
+                _availableConsumedResources = Player.Instance.AvailableResources.Where(r => !r.IsCoin).ToList();
                 SetRandomNeed(Random.Range(1, 3));
                 SetRandomGain();
                 break;
@@ -66,20 +93,19 @@ public class MapEntityController : MonoBehaviour
 
     }
 
-    public void SetRandomNeed(int days)
+    public void SetRandomNeed(float days)
     {
         ScriptableResource sr = _availableConsumedResources[Random.Range(0, _availableConsumedResources.Count)];
         SetNeed(sr, days);
     }
 
-    public void SetNeed(ScriptableResource sr, int days)
+    public void SetNeed(ScriptableResource sr, float days)
     {
-        _deliveryMaxTime = GameManager.Instance.GetCurrentDay() + days;
+        _deliveryTotalTime = GameManager.Instance.DaysToTime(days);
+        _deliveryMaxTime = GameManager.Instance.CurrentTime + _deliveryTotalTime;
         if (days == -1) _deliveryMaxTime = -1;
         _consumedResource = sr;
         _consumedSprite.sprite = _consumedResource.Sprite;
-        _actionCanvas.SetActive(true);
-        UpdateDeliveryTimeLeft();
     }
 
     public void SetRandomGain()
@@ -98,13 +124,19 @@ public class MapEntityController : MonoBehaviour
 
     public void UpdateDeliveryTimeLeft()
     {
-        if (_deliveryMaxTime > 0)
+        if (IsAvailable())
         {
-            _actionTmp.text = (_deliveryMaxTime - GameManager.Instance.GetCurrentDay()).ToString() + " days";
+            _countDownImage.fillAmount = (_deliveryMaxTime - GameManager.Instance.CurrentTime) / _deliveryTotalTime;
+            _countDownImage.color = Color.HSVToRGB(_countDownImage.fillAmount * 135f / 360f, 0.7f,0.7f);
         }
-        else
+        
+    }
+    public void UpdateCooldown()
+    {
+        if (IsInCooldown())
         {
-            _actionTmp.text = "";
+            _countDownImage.fillAmount = GameManager.Instance.TimeToDays(GameManager.Instance.CurrentTime - _lastTime) / _cooldown;
+            _countDownImage.color = new Color(255, 255, 255, 0.3f);
         }
     }
 
@@ -112,19 +144,19 @@ public class MapEntityController : MonoBehaviour
     {
         return
             !IsInCooldown() &&
-            (_deliveryMaxTime == -1 || _deliveryMaxTime - GameManager.Instance.GetCurrentDay() > 0)
+            (_deliveryMaxTime == -1 || _deliveryMaxTime - GameManager.Instance.CurrentTime > 0)
         ;
     }
 
     public bool IsInCooldown()
     {
-        return _lastTime > 0 && GameManager.Instance.GetCurrentDay() - _lastTime < _cooldown;
+        return _lastTime > 0 && GameManager.Instance.TimeToDays(GameManager.Instance.CurrentTime - _lastTime) < _cooldown;
     }
 
     public bool HasToRefresh()
     {
-        return !(_deliveryMaxTime == -1 || _deliveryMaxTime - GameManager.Instance.GetCurrentDay() > 0)
-            && (_cooldown <= 0 || GameManager.Instance.GetCurrentDay() - _lastTime > _cooldown)
+        return !(_deliveryMaxTime == -1 || _deliveryMaxTime - GameManager.Instance.CurrentTime > 0)
+            && (_cooldown <= 0 || GameManager.Instance.TimeToDays(GameManager.Instance.CurrentTime - _lastTime) > _cooldown)
         ;
     }
 
@@ -133,27 +165,23 @@ public class MapEntityController : MonoBehaviour
      */
     public void Tick()
     {
-        UpdateDeliveryTimeLeft();
-        _actionCanvas.SetActive(IsAvailable());
-        if (HasToRefresh())
-        {
-            Refresh();
-        }
+  
     }
 
     /**
      * Triggered when player enter the cell
      */
-    public void Activate()
+    public void Activate(Courier Courier)
     {
         if (IsAvailable())
         {
             if (Consume())
             {
-                Debug.Log("Condition met !");
                 switch (_type)
                 {
                     case MapEntityType.City:
+                        Player.Instance.AddSatisfaction(1f);
+                        UIManager.Instance.AddRating(transform.position, GetDeliveryRating());
                         break;
                     case MapEntityType.Resource:
                         break;
@@ -162,8 +190,8 @@ public class MapEntityController : MonoBehaviour
                     default:
                         break;
                 }
-                Dispatch();
-                _lastTime = GameManager.Instance.GetCurrentDay();
+                Dispatch(Courier);
+                _lastTime = GameManager.Instance.CurrentTime;
                 _deliveryMaxTime = 0;
             }
         }
@@ -180,8 +208,13 @@ public class MapEntityController : MonoBehaviour
         return true;
     }
 
-    public void Dispatch()
+    public void Dispatch(Courier Courier)
     {
-        if (_gainedResource != null) Player.Instance.GainResource(_gainedResource);
+        if (_gainedResource != null) Courier.GainResource(_gainedResource);
+    }
+
+    public float GetDeliveryRating()
+    {
+        return (_deliveryMaxTime - GameManager.Instance.CurrentTime) / _deliveryTotalTime * 5f + 1f;
     }
 }

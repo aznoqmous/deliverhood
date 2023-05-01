@@ -13,6 +13,12 @@ public class PathTile : MonoBehaviour
     [SerializeField] Sprite _rightSprite;
     [SerializeField] Sprite _endSprite;
 
+    public void SetColor(Color color)
+    {
+        _lastSpriteRenderer.color = color;
+        _nextSpriteRenderer.color = color;
+    }
+
     public void UpdateSprite(PathTile lastPath, PathTile nextPath)
     {
         if(lastPath == null)

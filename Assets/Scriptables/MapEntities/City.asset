@@ -14,13 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sprite: {fileID: 2291193177323857111, guid: 863717833986e0a4f9aa63eb7b06d3c1, type: 3}
   Type: 0
-  ConsumedResources:
-  - {fileID: 11400000, guid: 7cfa2be5a771fba44be3399cc41343aa, type: 2}
-  - {fileID: 11400000, guid: f9d7b0b3d6f437b4bae8417fd44f7d85, type: 2}
-  - {fileID: 11400000, guid: 555213026a7031146a8f32b202a86005, type: 2}
-  - {fileID: 11400000, guid: 7cfa2be5a771fba44be3399cc41343aa, type: 2}
-  - {fileID: 11400000, guid: 6771ae7aaabb1834a8498d746c7f34c8, type: 2}
-  - {fileID: 11400000, guid: 1fb17af28ba50ea4987ed2b049473463, type: 2}
+  ConsumedResources: []
   GainedResources:
   - {fileID: 11400000, guid: 555213026a7031146a8f32b202a86005, type: 2}
-  Cooldown: 1
+  Cooldown: 0.5

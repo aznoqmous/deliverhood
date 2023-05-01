@@ -15,19 +15,37 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private Vector2 _startPosition;
     [Header("Tiles")]
-    [SerializeField] private int _width, _height;
     [SerializeField] private GameObject _tilesContainer;
     [SerializeField] private Tile _tilePrefab;
     [SerializeField] private Dictionary<Vector2, Tile> _tiles;
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap _floorTilemap;
+    [SerializeField] private Tilemap _offGroundTilemap;
+    [SerializeField] private TileBase _offGroundTile;
     [SerializeField] private Tilemap _otherTilemap;
     private List<Vector3> _availablePlaces;
     
-    [SerializeField] List<ScriptableMapEntity> _scriptableMapEntities;
     [SerializeField] MapEntityController _mapEntityPrefab;
     [SerializeField] Dictionary<Vector2, MapEntityController> _mapEntities = new Dictionary<Vector2, MapEntityController>();
+
+    [SerializeField] Transform _pathParent;
+    [SerializeField] GameObject _pathContainerPrefab;
+
+    private float _width
+    {
+        get
+        {
+            return _floorTilemap.cellBounds.xMax - _floorTilemap.cellBounds.xMin;
+        }
+    }
+    private float _height
+    {
+        get
+        {
+            return _floorTilemap.cellBounds.yMax - _floorTilemap.cellBounds.yMin;
+        }
+    }
 
     public void LoadAvailablePlaces()
     {
@@ -51,12 +69,31 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
+    public void DrawOffGround()
+    {
+        for (int n = _floorTilemap.cellBounds.xMin; n < _floorTilemap.cellBounds.xMax; n++)
+        {
+            for (int p = _floorTilemap.cellBounds.yMin; p < _floorTilemap.cellBounds.yMax; p++)
+            {
+                Vector3Int localPlace = (new Vector3Int(n, p, (int)_floorTilemap.transform.position.y));
+                Vector3 place = _floorTilemap.CellToWorld(localPlace);
+                if (_floorTilemap.HasTile(localPlace))
+                {
+                }
+                else
+                {
+                    _offGroundTilemap.SetTile(localPlace, _offGroundTile);
+                }
+            }
+        }
+    }
     public void GenerateGrid()
     {
-        _floorTilemap.tileAnchor = new Vector3(0, 0, 0);
-        _otherTilemap.tileAnchor = new Vector3(0, 0, 0);
+        _floorTilemap.tileAnchor = Vector3.zero;
+        _offGroundTilemap.tileAnchor = Vector3.zero;
+        _otherTilemap.tileAnchor = Vector3.zero;
         LoadAvailablePlaces();
+        DrawOffGround();
 
         _startPosition = _availablePlaces[Random.Range(0, _availablePlaces.Count)];
         _tiles = new Dictionary<Vector2, Tile>();
@@ -119,10 +156,15 @@ public class MapManager : MonoBehaviour
         return GetTileAtPosition(Player.Instance.transform.position);
     }
 
-    public void GenerateMapEntities()
+    public void SpawnMapEntities(List<ScriptableMapEntity> entities)
     {
         List<Vector3> availablePositions = new List<Vector3>(_availablePlaces);
-        foreach (ScriptableMapEntity sme in _scriptableMapEntities)
+        availablePositions =availablePositions.Where(position => 
+        Player.Instance.IsInRadius(position, 1f) 
+        && GetMapEntityAtPosition(position) == null
+        && position.magnitude > Player.Instance.Level
+        ).ToList();
+        foreach (ScriptableMapEntity sme in entities)
         {
             Vector3 position = availablePositions[Random.Range(0, availablePositions.Count)];
             availablePositions.Remove(position);
@@ -141,18 +183,32 @@ public class MapManager : MonoBehaviour
 
     public MapEntityController GetMapEntityAtPosition(Vector2 position)
     {
-        return _mapEntities.TryGetValue(new Vector2(
+        _mapEntities.TryGetValue(new Vector2(
             Mathf.RoundToInt(position.x),
             Mathf.RoundToInt(position.y)
-        ), out var mapEntity) ? mapEntity : null;
+        ), out var mapEntity);
+        return mapEntity;
     }
 
-    public void TriggerMapEntityAtPosition(Vector2 position) 
+    public void TriggerMapEntityAtPosition(Vector2 position, Courier Courier) 
     {
         MapEntityController mapEntity = GetMapEntityAtPosition(position);
         if(mapEntity!= null)
         {
-            mapEntity.Activate();
+            mapEntity.Activate(Courier);
         }
+    }
+
+    public Transform GenerateNewPathContainer()
+    {
+        return Instantiate(_pathContainerPrefab, _pathParent).transform;
+    }
+    public void Clear()
+    {
+        ClearInteractable();
+        foreach (var me in _mapEntities) Destroy(me.Value.gameObject);
+        foreach(var te in _tiles) Destroy(te.Value.gameObject);
+        _mapEntities.Clear();
+        _tiles.Clear();
     }
 }

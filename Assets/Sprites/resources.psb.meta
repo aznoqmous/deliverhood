@@ -93,6 +93,72 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
+  - name: cross
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 45
+      width: 11
+      height: 10
+    spriteID: 6a43cac1263eef44d88686a43a5c876b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 45}
+    spritePosition: {x: 3, y: 3}
+  - name: check
+    originalName: 
+    pivot: {x: 0.5, y: 0.22222222}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 44
+      y: 4
+      width: 12
+      height: 9
+    spriteID: e4097c87d16d0334cb85e8a8e6a4481b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 44, y: 4}
+    spritePosition: {x: 2, y: 2}
+  - name: star
+    originalName: 
+    pivot: {x: 0.53846157, y: 0.42857146}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 13
+      height: 14
+    spriteID: eb1de39ed1b4b484bb78a7347715b2b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 4, y: 4}
+    spritePosition: {x: 2, y: 1}
   - name: flour
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -100,7 +166,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 23
+      x: 44
       y: 21
       width: 8
       height: 9
@@ -113,7 +179,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 23, y: 21}
+    uvTransform: {x: 44, y: 21}
     spritePosition: {x: 4, y: 4}
   - name: planks
     originalName: 
@@ -122,8 +188,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 23
-      y: 4
+      x: 25
+      y: 40
       width: 9
       height: 9
     spriteID: b296d84212a18e64abe30164c38bcaea
@@ -135,7 +201,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 23, y: 4}
+    uvTransform: {x: 25, y: 40}
     spritePosition: {x: 4, y: 4}
   - name: arrow
     originalName: 
@@ -144,8 +210,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 41
+      x: 25
+      y: 22
       width: 9
       height: 10
     spriteID: 395ee5ccf20ac5b439db6329866e3ddc
@@ -157,7 +223,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 41}
+    uvTransform: {x: 25, y: 22}
     spritePosition: {x: 4, y: 3}
   - name: gold
     originalName: 
@@ -166,7 +232,7 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 21
+      x: 42
       y: 35
       width: 12
       height: 12
@@ -179,8 +245,8 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 23, y: 38}
-    spritePosition: {x: 5, y: 5}
+    uvTransform: {x: 44, y: 38}
+    spritePosition: {x: 4, y: 5}
   - name: wheat
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -189,7 +255,7 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
+      y: 26
       width: 12
       height: 12
     spriteID: 9638b9dcc04c7c6488b9c4bc6e302c3d
@@ -201,7 +267,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 26}
     spritePosition: {x: 3, y: 3}
   - name: wood
     originalName: 
@@ -210,8 +276,8 @@ ScriptedImporter:
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 23
+      x: 25
+      y: 4
       width: 12
       height: 12
     spriteID: ef68a67befbbbce46a78969adf874ac6
@@ -223,7 +289,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     parentGroupIndex: -1
-    uvTransform: {x: 4, y: 23}
+    uvTransform: {x: 25, y: 4}
     spritePosition: {x: 3, y: 3}
   characterData:
     bones: []
@@ -299,13 +365,53 @@ ScriptedImporter:
   resliceFromLayer: 0
   mosaicPSDLayers: []
   rigPSDLayers:
+  - name: arrow
+    spriteName: arrow
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 395ee5ccf20ac5b439db6329866e3ddc
+    layerID: 7
+    mosaicPosition: {x: 25, y: 22}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: cross
+    spriteName: cross
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 6a43cac1263eef44d88686a43a5c876b
+    layerID: 20
+    mosaicPosition: {x: 4, y: 45}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: check
+    spriteName: check
+    isGroup: 0
+    parentIndex: -1
+    spriteID: e4097c87d16d0334cb85e8a8e6a4481b
+    layerID: 18
+    mosaicPosition: {x: 44, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: star
+    spriteName: star
+    isGroup: 0
+    parentIndex: -1
+    spriteID: eb1de39ed1b4b484bb78a7347715b2b4
+    layerID: 17
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
   - name: flour
     spriteName: flour
     isGroup: 0
     parentIndex: -1
     spriteID: 35e7e42f32db84341b6770ea8e12eef0
     layerID: 12
-    mosaicPosition: {x: 23, y: 21}
+    mosaicPosition: {x: 44, y: 21}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -315,17 +421,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: b296d84212a18e64abe30164c38bcaea
     layerID: 10
-    mosaicPosition: {x: 23, y: 4}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: arrow
-    spriteName: arrow
-    isGroup: 0
-    parentIndex: -1
-    spriteID: 395ee5ccf20ac5b439db6329866e3ddc
-    layerID: 7
-    mosaicPosition: {x: 4, y: 41}
+    mosaicPosition: {x: 25, y: 40}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -335,7 +431,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: c354fc972e7910448af1089fc382819a
     layerID: 6
-    mosaicPosition: {x: 23, y: 38}
+    mosaicPosition: {x: 44, y: 38}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -345,7 +441,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: 9638b9dcc04c7c6488b9c4bc6e302c3d
     layerID: 4
-    mosaicPosition: {x: 4, y: 4}
+    mosaicPosition: {x: 4, y: 26}
     flatten: 0
     isImported: 1
     isVisible: 1
@@ -355,7 +451,7 @@ ScriptedImporter:
     parentIndex: -1
     spriteID: ef68a67befbbbce46a78969adf874ac6
     layerID: 2
-    mosaicPosition: {x: 4, y: 23}
+    mosaicPosition: {x: 25, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
