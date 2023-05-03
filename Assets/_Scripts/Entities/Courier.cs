@@ -79,7 +79,7 @@ public class Courier : MonoBehaviour
 
     public void EnableInteractableTiles()
     {
-        Tile tile = MapManager.Instance.GetTileAtPosition(transform.position);
+        MapTile tile = MapManager.Instance.GetTileAtPosition(transform.position);
         if(tile!= null) tile.IsInteractable = true;
         PathManager.EnablePlayModeInteractableTiles();
     }

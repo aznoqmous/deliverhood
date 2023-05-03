@@ -18,7 +18,8 @@ public class GameManager : MonoBehaviour
     [Header("Light")]
     [SerializeField] float _nightLightIntensity = 0.2f;
     [SerializeField] float _dayLightIntensity = 1f;
-    [SerializeField] public Light2D Light;
+    [SerializeField] public Light2D GlobalLight;
+    [SerializeField] public Light2D SpotLight;
 
     [Header("Time")]
     [SerializeField] float _gameSpeed = 2f;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Light.pointLightOuterRadius = Mathf.Lerp(Light.pointLightOuterRadius, Player.Instance.GetLevelRadius()/2f, Time.deltaTime);
+        //SpotLight.pointLightOuterRadius = Mathf.Lerp(SpotLight.pointLightOuterRadius, Player.Instance.GetLevelRadius()/2f, Time.deltaTime);
         switch (State)
         {
             case GameState.Pathing:
@@ -152,11 +153,11 @@ public class GameManager : MonoBehaviour
     {
         if (IsDayLight())
         {
-            Light.intensity = Mathf.Lerp(Light.intensity, _dayLightIntensity, Time.deltaTime);
+            GlobalLight.intensity = Mathf.Lerp(GlobalLight.intensity, _dayLightIntensity, Time.deltaTime);
         }
         else
         {
-            Light.intensity = Mathf.Lerp(Light.intensity, _nightLightIntensity, Time.deltaTime);
+            GlobalLight.intensity = Mathf.Lerp(GlobalLight.intensity, _nightLightIntensity, Time.deltaTime);
         }
 
     }

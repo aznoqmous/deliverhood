@@ -10,6 +10,6 @@ public class Autolight : MonoBehaviour
 
     private void Update()
     {
-        _light.intensity = _intensity - GameManager.Instance.Light.intensity;
+        _light.intensity = Mathf.Max(0, _intensity - GameManager.Instance.GlobalLight.intensity);
     }
 }

@@ -137,6 +137,28 @@ ScriptedImporter:
     parentGroupIndex: -1
     uvTransform: {x: 4, y: 4}
     spritePosition: {x: 2, y: 6}
+  - name: quarry
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 62
+      y: 32
+      width: 22
+      height: 17
+    spriteID: d4891bca5aa02d94a9d290427ca8b290
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: 62, y: 32}
+    spritePosition: {x: 5, y: 2}
   - name: sawmill
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -294,6 +316,16 @@ ScriptedImporter:
     spriteID: a55ba5507d248c44d9298b6b3f2c14b7
     layerID: 7
     mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: quarry
+    spriteName: quarry
+    isGroup: 0
+    parentIndex: -1
+    spriteID: d4891bca5aa02d94a9d290427ca8b290
+    layerID: 13
+    mosaicPosition: {x: 62, y: 32}
     flatten: 0
     isImported: 1
     isVisible: 1

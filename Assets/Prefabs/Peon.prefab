@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef51ccc76e2d9d44a5a8f180cc843c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _intensity: 1
+  _intensity: 0.5
   _light: {fileID: 7167576982229285237}
 --- !u!114 &7167576982229285237
 MonoBehaviour:
@@ -365,4 +365,5 @@ MonoBehaviour:
   _animator: {fileID: 7167576983425620013}
   _color: {r: 0, g: 0, b: 0, a: 0}
   IsMoving: 0
+  _stopAtNextTarget: 0
   PathManager: {fileID: 7167576981866514830}

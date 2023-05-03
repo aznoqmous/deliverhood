@@ -13,39 +13,32 @@ public class MapManager : MonoBehaviour
         Instance = this;
     }
 
-    [SerializeField] private Vector2 _startPosition;
+    [SerializeField] Vector2 _startPosition;
+    [SerializeField] int _width = 10;
+    [SerializeField] int _height = 10;
+
     [Header("Tiles")]
-    [SerializeField] private GameObject _tilesContainer;
-    [SerializeField] private Tile _tilePrefab;
-    [SerializeField] private Dictionary<Vector2, Tile> _tiles;
+    [SerializeField] GameObject _tilesContainer;
+    [SerializeField] MapTile _tilePrefab;
+    Dictionary<Vector2, MapTile> _tiles;
+    [SerializeField] ScriptableMapTile _grassTile;
+    [SerializeField] ScriptableMapTile _offGroundTile;
+    [SerializeField] ScriptableMapTile _waterTile;
 
     [Header("Tilemaps")]
-    [SerializeField] private Tilemap _floorTilemap;
-    [SerializeField] private Tilemap _offGroundTilemap;
-    [SerializeField] private TileBase _offGroundTile;
-    [SerializeField] private Tilemap _otherTilemap;
-    private List<Vector3> _availablePlaces;
-    
+    [SerializeField] Tilemap _floorTilemap;
+    [SerializeField] Tilemap _offGroundTilemap;
+    [SerializeField] Tilemap _otherTilemap;
+    List<Vector3> _availablePlaces;
+
+    [Header("MapEntities")]
     [SerializeField] MapEntityController _mapEntityPrefab;
     [SerializeField] Dictionary<Vector2, MapEntityController> _mapEntities = new Dictionary<Vector2, MapEntityController>();
 
+    [Header("Paths")]
     [SerializeField] Transform _pathParent;
     [SerializeField] GameObject _pathContainerPrefab;
 
-    private float _width
-    {
-        get
-        {
-            return _floorTilemap.cellBounds.xMax - _floorTilemap.cellBounds.xMin;
-        }
-    }
-    private float _height
-    {
-        get
-        {
-            return _floorTilemap.cellBounds.yMax - _floorTilemap.cellBounds.yMin;
-        }
-    }
 
     public void LoadAvailablePlaces()
     {
@@ -82,7 +75,7 @@ public class MapManager : MonoBehaviour
                 }
                 else
                 {
-                    _offGroundTilemap.SetTile(localPlace, _offGroundTile);
+                    _offGroundTilemap.SetTile(localPlace, _offGroundTile.Tiles[0]);
                 }
             }
         }
@@ -96,7 +89,7 @@ public class MapManager : MonoBehaviour
         DrawOffGround();
 
         _startPosition = _availablePlaces[Random.Range(0, _availablePlaces.Count)];
-        _tiles = new Dictionary<Vector2, Tile>();
+        _tiles = new Dictionary<Vector2, MapTile>();
         foreach(Vector2 position in _availablePlaces)
         {
             var tile = Instantiate(_tilePrefab, position, Quaternion.identity, _tilesContainer.transform);
@@ -115,7 +108,7 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public Tile GetTileAtPosition(Vector2 position)
+    public MapTile GetTileAtPosition(Vector2 position)
     {
         return _tiles.TryGetValue(new Vector2(
             Mathf.RoundToInt(position.x),
@@ -128,30 +121,30 @@ public class MapManager : MonoBehaviour
         return _startPosition;
     }
 
-    public Tile GetStartTile()
+    public MapTile GetStartTile()
     {
         return GetTileAtPosition(_startPosition);
     }
 
-    public List<Tile> GetNeighbourTiles(Vector2 position)
+    public List<MapTile> GetNeighbourTiles(Vector2 position)
     {
-        List<Tile> tiles = new List<Tile>();
-        Tile leftTile = GetTileAtPosition(new Vector2(position.x - 1, position.y));
-        Tile rightTile = GetTileAtPosition(new Vector2(position.x + 1, position.y));
-        Tile topTile = GetTileAtPosition(new Vector2(position.x, position.y + 1));
-        Tile bottomTile = GetTileAtPosition(new Vector2(position.x, position.y - 1));
+        List<MapTile> tiles = new List<MapTile>();
+        MapTile leftTile = GetTileAtPosition(new Vector2(position.x - 1, position.y));
+        MapTile rightTile = GetTileAtPosition(new Vector2(position.x + 1, position.y));
+        MapTile topTile = GetTileAtPosition(new Vector2(position.x, position.y + 1));
+        MapTile bottomTile = GetTileAtPosition(new Vector2(position.x, position.y - 1));
         if (leftTile != null) tiles.Add(leftTile);
         if(rightTile !=null) tiles.Add(rightTile);
         if(topTile!=null) tiles.Add(topTile);
         if(bottomTile!=null) tiles.Add(bottomTile);
         return tiles;
     }
-    public List<Tile> GetNeighbourWalkableTiles(Vector2 position)
+    public List<MapTile> GetNeighbourWalkableTiles(Vector2 position)
     {
-        List<Tile> tiles = GetNeighbourTiles(position);
+        List<MapTile> tiles = GetNeighbourTiles(position);
         return tiles.Where(t => t.IsWalkable).ToList();
     }
-    public Tile GetPlayerTile()
+    public MapTile GetPlayerTile()
     {
         return GetTileAtPosition(Player.Instance.transform.position);
     }

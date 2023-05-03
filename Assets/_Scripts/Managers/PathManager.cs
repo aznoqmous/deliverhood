@@ -25,7 +25,7 @@ public class PathManager : MonoBehaviour
     private int _currentIndex = 0;
     private int _direction = 1;
     private Color _color;
-    private int _maxPathLength = 12;
+    private int _maxPathLength = 24;
 
     public void AddToPath(Vector2 position)
     {
@@ -71,14 +71,14 @@ public class PathManager : MonoBehaviour
         MapManager.Instance.ClearInteractable();
         if(_pathTiles.Count <= 0)
         {
-            Tile startTile = MapManager.Instance.GetPlayerTile();
+            MapTile startTile = MapManager.Instance.GetPlayerTile();
             startTile.IsInteractable = true;
         }
         else
         {
-            List<Tile> tiles = MapManager.Instance.GetNeighbourWalkableTiles(_path[_path.Count-1]);
-            tiles = tiles.Where(t => Player.Instance.IsInRadius(t.transform.position)).ToList();
-            foreach(Tile tile in tiles)
+            List<MapTile> tiles = MapManager.Instance.GetNeighbourWalkableTiles(_path[_path.Count-1]);
+            //tiles = tiles.Where(t => Player.Instance.IsInRadius(t.transform.position)).ToList();
+            foreach(MapTile tile in tiles)
             {
                 tile.IsInteractable = true;
             }
@@ -89,7 +89,7 @@ public class PathManager : MonoBehaviour
     {
         foreach(PathTile pathTile in _pathTiles)
         {
-            Tile tile = MapManager.Instance.GetTileAtPosition((Vector2)pathTile.transform.position);
+            MapTile tile = MapManager.Instance.GetTileAtPosition((Vector2)pathTile.transform.position);
             tile.IsInteractable= true;
         }
     }
